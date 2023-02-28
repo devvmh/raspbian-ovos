@@ -1,5 +1,5 @@
 # ovos-raspbian
-Run ovos ontop of RaspberryPiOS
+Run ovos on top of RaspberryPiOS
 
 Ever wanted to run ovos on a device that an image is not provided for? Give this a try.
 
@@ -47,7 +47,7 @@ We are almost done with the device setup.
 
 `sudo reboot now`
 
-** From this point on, you should be able to access your device from any SSH terminal. **
+** From this point on, you should be able to access your device from any SSH terminal. ** For guide for how to do this, see https://www.raspberrypi.com/documentation/computers/remote-access.html. 
 
 First you need to make sure your system is up to date.  It should be close as you just installed a new image.
 

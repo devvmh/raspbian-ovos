@@ -56,7 +56,7 @@ We are almost done with the device setup.
 
 `sudo reboot now`
 
-** From this point on, you should be able to access your device from any SSH terminal. ** For guide for how to do this, see https://www.raspberrypi.com/documentation/computers/remote-access.html. 
+** From this point on, you should be able to access your device from any SSH terminal. ** For guide for how to do this, see https://www.raspberrypi.com/documentation/computers/remote-access.html.
 
 First you need to make sure your system is up to date.  It should be close as you just installed a new image.
 
@@ -79,7 +79,7 @@ I also install them all localy instead of system wide
 
 Lets start with cloning a couple of repositories
 
-- `git clone https://github.com/builderjer/ovos-raspbian.git`
+- `git clone https://github.com/OpenVoiceOS/ovos-picroft.git`
 
 This repository has files that will be used in the guide
 
@@ -99,8 +99,8 @@ If you are installing a complete system with a screen, use the following command
 
 We will be installing the systemd files as a regular user instead of system wide. The official ovos buildroot images installs these files in `/usr/lib/systemd/user/`. There are guides that say user systemd files can also be placed in `/etc/systemd/user.` or `$HOME/.config/systemd/user/`. We will be using the users home directory to avoid using `sudo` here.
 
-Enter the cloned repo `ovos-raspbian` assuming you cloned this to your home directory
-- `cd ~/ovos-raspbian/systemd/`
+Enter the cloned repo `ovos-picroft` assuming you cloned this to your home directory
+- `cd ~/ovos-picroft/systemd/`
 
 Copy the files from there
 
@@ -117,13 +117,13 @@ Enable the system files
 ## Step 5: Install the executables
 
 These are the files that systemd uses to start ovos.  These include `hooks` for restarting and stopping the services.
-- `cd ~/ovos-raspbian/libexec/`
+- `cd ~/ovos-raspbian/exec/`
 
 Here we need to use sudo to copy the files to the right location.
-- `sudo cp * /usr/libexec/`
+- `cp * ~/.local/bin/exec/`
 
 And make them executable
-- `sudo chmod a+x /usr/libexec/mycroft*`
+- `chmod a+x ~/.local/bin/mycroft*`
 
 These executables require `sdnotify`
 

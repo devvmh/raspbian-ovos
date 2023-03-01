@@ -79,7 +79,7 @@ I also install them all localy instead of system wide
 
 Lets start with cloning a couple of repositories
 
-- `git clone https://github.com/builderjer/ovos-raspbian.git`
+- `git clone https://github.com/OpenVoiceOS/ovos-picroft.git`
 
 This repository has files that will be used in the guide
 
@@ -99,8 +99,8 @@ If you are installing a complete system with a screen, use the following command
 
 We will be installing the systemd files as a regular user instead of system wide. The official ovos buildroot images installs these files in `/usr/lib/systemd/user/`. There are guides that say user systemd files can also be placed in `/etc/systemd/user.` or `$HOME/.config/systemd/user/`. We will be using the users home directory to avoid using `sudo` here.
 
-Enter the cloned repo `ovos-raspbian` assuming you cloned this to your home directory
-- `cd ~/ovos-raspbian/systemd/`
+Enter the cloned repo `ovos-picroft` assuming you cloned this to your home directory
+- `cd ~/ovos-picroft/systemd/`
 
 Copy the files from there
 
@@ -117,7 +117,7 @@ Enable the system files
 ## Step 5: Install the executables
 
 These are the files that systemd uses to start ovos.  These include `hooks` for restarting and stopping the services.
-- `cd ~/ovos-raspbian/libexec/`
+- `cd ~/ovos-picroft/exec/`
 
 Here we need to use sudo to copy the files to the right location.
 - `sudo cp * /usr/libexec/`

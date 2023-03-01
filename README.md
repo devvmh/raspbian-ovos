@@ -51,7 +51,7 @@ We are almost done with the device setup.
 
 First you need to make sure your system is up to date.  It should be close as you just installed a new image.
 
-`sudo apt update && sudo apt upgrade`
+`sudo apt -y update && sudo apt -y upgrade`
 
 Now we can work on installing OVOS
 

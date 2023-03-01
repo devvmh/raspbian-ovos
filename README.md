@@ -119,7 +119,7 @@ Enable the system files
 These are the files that systemd uses to start ovos.  These include `hooks` for restarting and stopping the services.
 - `cd ~/ovos-raspbian/exec/`
 
-Here we need to use sudo to copy the files to the right location.
+Here we need to copy the files to the right location.
 - `cp * ~/.local/bin/exec/`
 
 And make them executable

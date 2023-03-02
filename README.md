@@ -66,6 +66,8 @@ Now we can work on installing OVOS
 
 ## Step 3: Install OVOS-CORE
 
+There are some recommendations to use a venv for ovos, this guide DOES NOT do that.  The ovos headless stack on a RPi3 is about all it can handle.  So it is assumed that this device is a dedicated ovos device, therefore no venv is required.
+
 There are a few packages required for ovos, so we will install those first
 
 `sudo apt install build-essential python3-dev swig libssl-dev libfann-dev portaudio19-dev libpulse-dev`
@@ -92,9 +94,6 @@ Now we can install ovos.
 This guide assumes that you are creating a headless device (no screen), so we only need some of the packages provided by ovos-core
 - `pip install ./ovos-core[audio,PHAL,stt,tts,skills_lgpl,skills,bus,skills-essential]`
 
-If you are installing a complete system with a screen, use the following command
-- `pip install ./ovos-core[all]`
-
 ## Step 4: Install the systemd files
 
 We will be installing the systemd files as a regular user instead of system wide. The official ovos buildroot images installs these files in `/usr/lib/systemd/user/`. There are guides that say user systemd files can also be placed in `/etc/systemd/user.` or `$HOME/.config/systemd/user/`. We will be using the users home directory to avoid using `sudo` here.
@@ -117,10 +116,10 @@ Enable the system files
 ## Step 5: Install the executables
 
 These are the files that systemd uses to start ovos.  These include `hooks` for restarting and stopping the services.
-- `cd ~/ovos-raspbian/exec/`
+- `cd ~/ovos-picroft/exec/`
 
 Here we need to copy the files to the right location.
-- `cp * ~/.local/bin/exec/`
+- `cp * ~/.local/bin/`
 
 And make them executable
 - `chmod a+x ~/.local/bin/mycroft*`
@@ -167,12 +166,16 @@ Do this for each skill you want installed.  As a <strong>warning</strong>, pip i
 
 There are a few things that are usefull to me.  [ncpamixer](https://github.com/fulhax/ncpamixer) and [ovos-cli-client](https://github.com/OpenVoiceOS/ovos-cli-client)
 
+`ncpamixer` is a ncurses tool used to help configure pulseaudio
+
 ```
 git clone https://github.com/fulhax/ncpamixer.git
 cd ncpamixer/
 make
 sudo make install
 ```
+
+`ovos-cli-client` is a ncurses tool mainly used for debugging ovos.  It give the user a way to interact without using voice.
 
 `pip install git+https://github.com/OpenVoiceOS/ovos-cli-client.git`
 

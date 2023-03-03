@@ -103,6 +103,7 @@ Enter the cloned repo `ovos-picroft` assuming you cloned this to your home direc
 
 Copy the files from there
 
+- `mkdir -p ~/.config/systemd/user`
 - `cp * ~/.config/systemd/user/`
 
 Reload the systemd daemon
@@ -119,6 +120,7 @@ These are the files that systemd uses to start ovos.  These include `hooks` for 
 - `cd ~/ovos-picroft/exec/`
 
 Here we need to copy the files to the right location.
+- `mkdir -p ~/.local/bin`
 - `cp * ~/.local/bin/`
 
 And make them executable

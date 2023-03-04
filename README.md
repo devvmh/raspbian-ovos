@@ -4,7 +4,7 @@ Run ovos on top of RaspberryPiOS
 
 Check out the docs for information on how to install manually
 
-https://openvoiceos.github.io/community-docs/ovos-picroft/
+https://openvoiceos.github.io/community-docs/ovos_picroft/
 
 ## Purpose of this guide
 

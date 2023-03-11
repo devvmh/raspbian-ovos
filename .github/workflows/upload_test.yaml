@@ -1,0 +1,21 @@
+name: Test file upload
+on:
+  workflow_dispatch:
+
+jobs:
+  pi-gen-picroft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: downloads.openvoiceos.com
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          source: "README.md"
+          target: "."

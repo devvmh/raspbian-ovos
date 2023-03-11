@@ -1,5 +1,5 @@
 [Unit]
-Description=Mycroft Voice
+Description=Mycroft Skills
 PartOf=mycroft.service
 After=mycroft.service
 After=mycroft-messagebus.service
@@ -7,10 +7,9 @@ After=pulseaudio.service
 
 [Service]
 Type=notify
-ExecStart=/usr/libexec/mycroft-systemd-voice
-TimeoutStartSec=1m
+ExecStart=/home/ovos/.local/bin/mycroft-systemd-skills
+TimeoutStartSec=10m
 TimeoutStopSec=1m
-Restart=on-failure
 Restart=on-failure
 StartLimitInterval=5min
 StartLimitBurst=4

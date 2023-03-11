@@ -1,13 +1,11 @@
 [Unit]
-Description=Mycroft PHAL
+Description=Mycroft Messagebus
 PartOf=mycroft.service
 After=mycroft.service
-After=mycroft-messagebus.service
-After=pulseaudio.service
 
 [Service]
 Type=notify
-ExecStart=/usr/libexec/mycroft-systemd-phal
+ExecStart=/home/ovos/.local/bin/mycroft-systemd-messagebus
 TimeoutStartSec=1m
 TimeoutStopSec=1m
 Restart=on-failure

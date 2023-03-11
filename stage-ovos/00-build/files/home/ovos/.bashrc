@@ -4,6 +4,7 @@ alias ll='ls -la'
 
 # Hack to make mycroft services enabled and start on first boot
 if [[ -f /home/ovos/first_boot ]]; then
+
  systemctl --user enable mycroft.service
  systemctl --user enable mycroft-messagebus.service
  systemctl --user enable mycroft-audio.service

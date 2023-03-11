@@ -44,6 +44,7 @@ install -v -m 0644 files/usr/lib/systemd/user/mycroft-phal.service "${ROOTFS_DIR
 install -v -m 0644 files/usr/lib/systemd/user/mycroft-skills.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-skills.service"
 install -v -m 0644 files/usr/lib/systemd/user/mycroft-voice.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-voice.service"
 install -v -m 0644 files/usr/lib/systemd/user/mycroft-admin-phal.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-admin-phal.service"
+
 install -v -m 0644 files/usr/lib/systemd/user-preset/10-ovos.preset "${ROOTFS_DIR}/usr/lib/systemd/user-preset/"
 install -v -m 0644 files/usr/lib/systemd/user-preset/91-dbus.preset "${ROOTFS_DIR}/usr/lib/systemd/user-preset/"
 # log directories

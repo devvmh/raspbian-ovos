@@ -1,4 +1,4 @@
-name: Build ovos-picroft-bullseye
+name: Build raspbian-ovos
 on:
   workflow_dispatch:
 

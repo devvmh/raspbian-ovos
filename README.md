@@ -1,4 +1,4 @@
-ovos-picroft
+# raspbian-ovos
 
 Run ovos on top of RaspberryPiOS
 

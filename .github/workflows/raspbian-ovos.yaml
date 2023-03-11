@@ -32,7 +32,7 @@ jobs:
           keyboard-layout: English (US)
 
           # Default locale of the system image.
-          locale: All locale
+          locale: en_US.UTF-8
 
           # Name of the initial user account.
           username: ovos

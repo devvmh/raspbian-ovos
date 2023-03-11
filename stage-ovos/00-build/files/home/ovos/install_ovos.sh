@@ -69,7 +69,7 @@ pip install git+https://github.com/NeonGeckoCom/skill-local_music
 pip install git+https://github.com/NeonGeckoCom/skill-caffeinewiz
 
 # # JarbasSkills
-# pip3 install git+https://github.com/JarbasSkills/skill-icanhazdadjokes
+# pip install git+https://github.com/JarbasSkills/skill-icanhazdadjokes
 
 pip install git+https://github.com/OpenVoiceOS/skill-alerts
 pip install git+https://github.com/OpenVoiceOS/skill-ovos-date-time

@@ -7,4 +7,4 @@ enable mycroft-voice.service
 enable mycroft-audio.service
 enable mycroft-skills.service
 enable mycroft-phal.service
-
+enable mycroft-admin-phal.service

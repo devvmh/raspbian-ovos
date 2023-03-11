@@ -13,17 +13,17 @@ jobs:
         id: build
         with:
           # Final image name.
-          image-name: ovos-picroft-bullseye
+          image-name: raspbian-ovos
 
           # List of stage name to execute in given order. Relative and absolute paths to
           # custom stage directories are allowed here. Note that by default pi-gen exports
           # images in stage2 (lite), stage4 and stage5. You probably want to hook in custom
           # stages before one of the exported stages. Otherwise, the action will make sure
           # any custom stage will include an image export directive.
-          stage-list: stage0 stage1 stage2 ./stage-picroft
+          stage-list: stage0 stage1 stage2 ./stage-ovos
 
           # Host name of the image.
-          hostname: ovos-picroft
+          hostname: raspbian-ovos
 
           # Name of the initial user account.
           username: ovos

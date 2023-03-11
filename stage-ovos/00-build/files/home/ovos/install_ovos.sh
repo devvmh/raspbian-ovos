@@ -90,6 +90,6 @@ pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-chatgpt
 
 # OCP
 pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-news
-pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
-pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
+#pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
+#pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
 

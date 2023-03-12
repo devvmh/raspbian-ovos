@@ -26,7 +26,7 @@ jobs:
           hostname: raspbian-ovos
 
           # Default keyboard keymap.
-          keyboard-keymap: en
+          keyboard-keymap: us
 
           # Default keyboard layout.
           keyboard-layout: English (US)

@@ -14,7 +14,7 @@ if [[ -f /home/ovos/first_boot ]]; then
  systemctl --user enable mycroft-skills.service
  systemctl --user start mycroft.service
 
- rm /home/ovos/first_boot
+ sudo rm /home/ovos/first_boot
 fi
 
 ######################################################################

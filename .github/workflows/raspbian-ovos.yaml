@@ -38,7 +38,7 @@ jobs:
           username: ovos
 
           # Password of the intial user account, locked if empty.
-          password: 'ovos123'
+          password: 'ovos'
 
           # Compression to apply on final image (either "none", "zip", "xz" or "gz").
           compression: zip

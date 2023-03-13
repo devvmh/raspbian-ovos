@@ -60,7 +60,7 @@ pip install git+https://github.com/OpenVoiceOS/ovos-stt-plugin-server
 pip install git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite
 
 # install skills
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-setup
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-setup
 
 # from NeonGeckoCom
 pip install git+https://github.com/NeonGeckoCom/skill-user_settings
@@ -93,4 +93,4 @@ pip install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-chatgpt
 pip install git+https://github.com/OpenVoiceOS/skill-ovos-news
 pip install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
 pip install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
-
+pip install yt-dlp

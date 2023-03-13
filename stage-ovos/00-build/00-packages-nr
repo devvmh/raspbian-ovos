@@ -34,3 +34,4 @@ python-pip-whl
 cmake
 libncurses-dev
 libpulse-dev
+vlc

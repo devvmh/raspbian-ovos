@@ -43,10 +43,10 @@ install -v -m 0644 files/usr/lib/systemd/user/mycroft-messagebus.service "${ROOT
 install -v -m 0644 files/usr/lib/systemd/user/mycroft-phal.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-phal.service"
 install -v -m 0644 files/usr/lib/systemd/user/mycroft-skills.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-skills.service"
 install -v -m 0644 files/usr/lib/systemd/user/mycroft-voice.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-voice.service"
-install -v -m 0644 files/usr/lib/systemd/user/mycroft-admin-phal.service "${ROOTFS_DIR}/usr/lib/systemd/user/mycroft-admin-phal.service"
+install -v -m 0644 files/etc/systemd/system/mycroft-admin-phal.service "${ROOTFS_DIR}/etc/systemd/system/mycroft-admin-phal.service"
 
 install -v -m 0644 files/usr/lib/systemd/user-preset/10-ovos.preset "${ROOTFS_DIR}/usr/lib/systemd/user-preset/"
-install -v -m 0644 files/usr/lib/systemd/user-preset/91-dbus.preset "${ROOTFS_DIR}/usr/lib/systemd/user-preset/"
+
 # log directories
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state/mycroft"
@@ -63,10 +63,15 @@ install -v -d -m 0755 "${ROOTFS_DIR}/etc/pulse"
 install -v -m 0644 files/etc/pulse/pulseaudio-daemon.conf "${ROOTFS_DIR}/etc/pulse/"
 install -v -m 0644 files/etc/pulse/pulseaudio-system.pa "${ROOTFS_DIR}/etc/pulse/"
 
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/dbus-1"
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/dbus-1/system.d"
-install -v -m 0644 files/etc/dbus-1/system.d/ovos.conf "${ROOTFS_DIR}/etc/dbus-1/system.d/"
-install -v -m 0644 files/etc/dbus-1/system.d/pulseaudio-system.conf "${ROOTFS_DIR}/etc/dbus-1/system.d/"
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev/rules.d"
+install -v -m 0644 files/etc/udev/rules.d/91-pulseadio-GeneralPlus.rules "${ROOTFS_DIR}/udev/rules.d/"
+
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/share"
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/share/pulseaudio"
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/share/pulseaudio/alsa-mixer"
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/share/pulseaudio/alsa-mixer/profile-sets"
+install -v -m 0644 files/usr/share/pulseaudio/alsa-mixer/profile-sets/GeneralPlus.conf "${ROOTFS_DIR}/usr/share/pulseaudio/alsa-mixer/profile-sets/"
 
 # mimic and vosk
 cp -Rv files/home/ovos/.local/share/*

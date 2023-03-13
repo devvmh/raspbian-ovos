@@ -65,7 +65,7 @@ install -v -m 0644 files/etc/pulse/pulseaudio-system.pa "${ROOTFS_DIR}/etc/pulse
 
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev/rules.d"
-install -v -m 0644 files/etc/udev/rules.d/91-pulseadio-GeneralPlus.rules "${ROOTFS_DIR}/udev/rules.d/"
+install -v -m 0644 files/etc/udev/rules.d/91-pulseadio-GeneralPlus.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
 
 install -v -d -m 0755 "${ROOTFS_DIR}/usr/share"
 install -v -d -m 0755 "${ROOTFS_DIR}/usr/share/pulseaudio"

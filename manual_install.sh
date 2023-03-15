@@ -175,7 +175,7 @@ echo
 echo "We are now ready to install OVOS"
 echo
 read -p "Type 'Y' to start install (any other key aborts): " install
-if [[ $install != "Y" ]]; then
+if [[ $install != "Y" || $install != "y" ]]; then
     exit 0
 fi
 

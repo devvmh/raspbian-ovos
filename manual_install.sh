@@ -158,17 +158,17 @@ echo
 echo "First lets setup some things."
 echo
 read -p "Do you want to install systemd files (Y/n): " systemd
-if [[ ! $systemd || $systemd[0] == "y" || $systemd[0] == "Y" ]]; then
+if [[ $systemd == "" || $systemd[0] == "y" || $systemd[0] == "Y" ]]; then
     systemd="YES"
     echo
     read -p "Do you want to automatically start the ovos services? (Y/n): " enabled
-    if [[ ! $enabled || $enabled[0] == "y" || $enabled[0] == "Y" ]]; then
+    if [[ $enabled == "" || $enabled[0] == "y" || $enabled[0] == "Y" ]]; then
         enabled="YES"
     fi
 fi
 echo
 read -p "Would you like to install extra skills to match the downloadable image? (Y/n): " extra_skills
-if [[ ! $extra_skills || $extra_skills[0] == "y" || $extra_skills[0] == "Y" ]]; then
+if [[ $extra_skills == "" || $extra_skills[0] == "y" || $extra_skills[0] == "Y" ]]; then
     extra_skills="YES"
 fi
 echo

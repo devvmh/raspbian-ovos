@@ -192,7 +192,7 @@ fi
 echo "Done installing OVOS"
 echo
 read -p "Would you like to start ovos now? (Y/n): " start
-if [[ ! $start || $start[0] == "y" || $start[0] == "Y" ]]; then
+if [[ $start == "" || $start[0] == "y" || $start[0] == "Y" ]]; then
     systemctl --user start mycroft
 
 else

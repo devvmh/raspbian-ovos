@@ -8,14 +8,32 @@ echo "tmpfs /ramdisk tmpfs rw,nodev,nosuid,size=20M 0 0" >> "${ROOTFS_DIR}/etc/f
 # console auto login
 install -v -m 0644 files/etc/systemd/system/getty@tty1.service.d/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
 
-# install picroft files
+# install ovos files
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/mycroft"
 install -v -m 0644 files/etc/mycroft/mycroft.conf "${ROOTFS_DIR}/etc/mycroft/mycroft.conf"
+
+#audio
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/pulse"
+install -v -m 0644 files/etc/pulse/pulseaudio-daemon.conf "${ROOTFS_DIR}/etc/pulse/"
+install -v -m 0644 files/etc/pulse/pulseaudio-system.pa "${ROOTFS_DIR}/etc/pulse/"
+
+install -v -m 0644 files/etc/asound.conf "${ROOTFS_DIR}/etc/"
+
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev/rules.d"
+install -v -m 0644 files/etc/udev/rules.d/91-pulseaudio-GeneralPlus.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
+
+# home directory
 
 # bash scripts
 install -v -m 0664 files/home/ovos/.bashrc "${ROOTFS_DIR}/home/ovos/.bashrc"
 install -v -m 0664 files/home/ovos/.bash_profile "${ROOTFS_DIR}/home/ovos/.bash_profile"
 install -v -m 0664 files/home/ovos/cli_login.sh "${ROOTFS_DIR}/home/ovos/cli_login.sh"
+
+# user level mycroft.conf
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config"
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/mycroft"
+install -v -m 0644 files/home/ovos/.config/mycroft/mycroft.conf "${ROOTFS_DIR}/home/ovos/.config/mycroft/"
 
 # helper scripts
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local"
@@ -23,16 +41,40 @@ install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/bin"
 
 install -v -m 0755 files/home/ovos/.local/bin/bus-monitor "${ROOTFS_DIR}/home/ovos/.local/bin/bus-monitor"
 
-# systemd entrypoints
-install -v -m 0755 files/home/ovos/.local/bin/ovos-systemd-messagebus "${ROOTFS_DIR}/home/ovos/.local/bin/ovos-systemd-messagebus"
-install -v -m 0755 files/home/ovos/.local/bin/ovos-systemd-skills "${ROOTFS_DIR}/home/ovos/.local/bin/ovos-systemd-skills"
-install -v -m 0755 files/home/ovos/.local/bin/ovos-systemd-audio "${ROOTFS_DIR}/home/ovos/.local/bin/ovos-systemd-audio"
-install -v -m 0755 files/home/ovos/.local/bin/ovos-systemd-voice "${ROOTFS_DIR}/home/ovos/.local/bin/ovos-systemd-voice"
-install -v -m 0755 files/home/ovos/.local/bin/ovos-systemd-phal "${ROOTFS_DIR}/home/ovos/.local/bin/ovos-systemd-phal"
-install -v -m 0755 files/home/ovos/.local/bin/ovos-systemd-admin-phal "${ROOTFS_DIR}/home/ovos/.local/bin/ovos-systemd-admin-phal"
+# xdg-data folder
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share"
 
-# systemd services
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config"
+# preloaded precise-lite wakewords
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite"
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/wakewords"
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/wakewords/en"
+
+install -v -m 0644 files/home/ovos/.local/share/precise-lite/wakewords/en/hey_mycroft.tflite "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/wakewords/en/"
+
+# log directories
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state"
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state/mycroft"
+
+# /usr
+
+# systemd entrypoints
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/libexec"
+install -v -m 0755 files/usr/libexec/ovos-systemd-messagebus "${ROOTFS_DIR}/usr/libexec/"
+install -v -m 0755 files/usr/libexec/ovos-systemd-skills "${ROOTFS_DIR}/usr/libexec/"
+install -v -m 0755 files/usr/libexec/ovos-systemd-audio "${ROOTFS_DIR}/usr/libexec/"
+install -v -m 0755 files/usr/libexec/ovos-systemd-voice "${ROOTFS_DIR}/usr/libexec/"
+install -v -m 0755 files/usr/libexec/ovos-systemd-phal "${ROOTFS_DIR}/usr/libexec/"
+install -v -m 0755 files/usr/libexec/ovos-systemd-admin-phal "${ROOTFS_DIR}/usr/libexec/"
+
+# system services
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/systemd/system/ovos.service.wants"
+install -v -m 0644 files/usr/lib/systemd/system/ovos-admin-phal.service "${ROOTFS_DIR}/usr/lib/systemd/system/"
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/systemd/system-preset"
+install -v -m 0644 files/usr/lib/systemd/system-preset/10-ovos.conf "${ROOTFS_DIR}/usr/lib/systemd/system-preset/"
+
+# user services
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/systemd/user/default.target.wants"
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/systemd/user/ovos.service.wants"
 
 install -v -m 0644 files/usr/lib/systemd/user/ovos.service "${ROOTFS_DIR}/usr/lib/systemd/user/ovos.service"
 install -v -m 0644 files/usr/lib/systemd/user/ovos-audio.service "${ROOTFS_DIR}/usr/lib/systemd/user/ovos-audio.service"
@@ -40,43 +82,25 @@ install -v -m 0644 files/usr/lib/systemd/user/ovos-messagebus.service "${ROOTFS_
 install -v -m 0644 files/usr/lib/systemd/user/ovos-phal.service "${ROOTFS_DIR}/usr/lib/systemd/user/ovos-phal.service"
 install -v -m 0644 files/usr/lib/systemd/user/ovos-skills.service "${ROOTFS_DIR}/usr/lib/systemd/user/ovos-skills.service"
 install -v -m 0644 files/usr/lib/systemd/user/ovos-voice.service "${ROOTFS_DIR}/usr/lib/systemd/user/ovos-voice.service"
-install -v -m 0644 files/usr/lib/systemd/user/ovos-admin-phal.service "${ROOTFS_DIR}/usr/lib/systemd/user/ovos-admin-phal.service"
 
+install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/systemd/user-preset"
 install -v -m 0644 files/usr/lib/systemd/user-preset/10-ovos.preset "${ROOTFS_DIR}/usr/lib/systemd/user-preset/"
-install -v -m 0644 files/usr/lib/systemd/user-preset/91-dbus.preset "${ROOTFS_DIR}/usr/lib/systemd/user-preset/"
-# log directories
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state"
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state/mycroft"
 
 # other directories
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share"
 install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/environment.d"
 install -v -m 0644 files/usr/lib/environment.d/99-environment.conf "${ROOTFS_DIR}/usr/lib/environment.d/"
 
-#audio
-install -v -m 0644 files/etc/asound.conf "${ROOTFS_DIR}/etc/"
-
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/pulse"
-install -v -m 0644 files/etc/pulse/pulseaudio-daemon.conf "${ROOTFS_DIR}/etc/pulse/"
-install -v -m 0644 files/etc/pulse/pulseaudio-system.pa "${ROOTFS_DIR}/etc/pulse/"
-
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/dbus-1"
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/dbus-1/system.d"
-install -v -m 0644 files/etc/dbus-1/system.d/ovos.conf "${ROOTFS_DIR}/etc/dbus-1/system.d/"
-install -v -m 0644 files/etc/dbus-1/system.d/pulseaudio-system.conf "${ROOTFS_DIR}/etc/dbus-1/system.d/"
-
-# mimic and vosk
-cp -Rv files/home/ovos/.local/share/*
-
-install -v -m 0755 files/home/ovos/install_ovos.sh "${ROOTFS_DIR}/home/ovos/"
+install -v -m 0755 files/install_ovos.sh "${ROOTFS_DIR}/"
 
 # install ovos-core
 on_chroot << EOF
+chmod -v +x /install_ovos.sh
+
 chown -Rv ovos:ovos /home/ovos
 chmod -Rv +x /home/ovos/.local/bin/*
 
-sudo -u ovos -H -E bash -x /home/ovos/install_ovos.sh
+sudo -E bash -x /install_ovos.sh
 
-rm -rf /home/ovos/install_ovos.sh
+sudo rm /install_ovos.sh
 
 EOF

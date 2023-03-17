@@ -7,7 +7,7 @@ After=pulseaudio.service
 
 [Service]
 Type=notify
-ExecStart=/home/ovos/.local/bin/ovos-systemd-voice
+ExecStart=/usr/libexec/ovos-systemd-voice
 TimeoutStartSec=1m
 TimeoutStopSec=1m
 Restart=on-failure

@@ -12,5 +12,12 @@ sudo make install
 cd ..
 rm -rf ncpamixer
 
-# Add file for first boot flag
-touch /home/ovos/first_boot
+sudo ln -s /usr/lib/systemd/user/ovos.service /usr/lib/systemd/user/default.target.wants/
+
+sudo ln -s /usr/lib/systemd/user/ovos-audio.service /usr/lib/systemd/user/ovos.service.wants/
+sudo ln -s /usr/lib/systemd/user/ovos-messagebus.service /usr/lib/systemd/user/ovos.service.wants/
+sudo ln -s /usr/lib/systemd/user/ovos-phal.service /usr/lib/systemd/user/ovos.service.wants/
+sudo ln -s /usr/lib/systemd/user/ovos-skills.service /usr/lib/systemd/user/ovos.service.wants/
+sudo ln -s /usr/lib/systemd/user/ovos-voice.service /usr/lib/systemd/user/ovos.service.wants/
+
+sudo ln -s /etc/systemd/system/ovos-admin-phal.service /etc/systemd/system/ovos.service.wants/

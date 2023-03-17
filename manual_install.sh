@@ -152,55 +152,62 @@ function install_extra_skills (){
     echo
     }
 
+echo
 echo "This file will install ovos-core to this device"
 echo "using the latest commits from github."
 echo
 echo "First lets setup some things."
 echo
 read -p "Do you want to install systemd files (Y/n): " systemd
-if [[ ! $systemd || $systemd[0] == "y" || $systemd[0] == "Y" ]]; then
+if [[ -z "$systemd" || $systemd == y* || $systemd == Y* ]]; then
     systemd="YES"
-    echo
     read -p "Do you want to automatically start the ovos services? (Y/n): " enabled
-    if [[ ! $enabled || $enabled[0] == "y" || $enabled[0] == "Y" ]]; then
+    if [[ -z "$enabled" || $enabled[0] == "y" || $enabled[0] == "Y" ]]; then
         enabled="YES"
     fi
 fi
 echo
 read -p "Would you like to install extra skills to match the downloadable image? (Y/n): " extra_skills
-if [[ ! $extra_skills || $extra_skills[0] == "y" || $extra_skills[0] == "Y" ]]; then
+if [[ -z "$extra_skills" || $extra_skills == y* || $extra_skills == Y* ]]; then
     extra_skills="YES"
 fi
+echo
+echo $systemd
+echo $enabled
+echo $extra_skills
+echo
 echo
 echo "We are now ready to install OVOS"
 echo
 read -p "Type 'Y' to start install (any other key aborts): " install
-if [[ $install != "Y" ]]; then
-    exit[0]
-fi
+if [[ $install == Y* || $install == y* ]]; then
+    install_core
 
-install_core
+    if [[ $systemd == "YES" ]]; then
+        install_systemd
+    fi
 
-if [[ $systemd == "YES" ]]; then
-    install_systemd
-fi
+    if [[ $extra_skills == "YES" ]]; then
+        install_extra_skills
+    fi
 
-if [[ $extra_skills == "YES" ]]; then
-    install_extra_skills
-fi
-
-echo "Done installing OVOS"
-echo
-read -p "Would you like to start ovos now? (Y/n): " start
-if [[ ! $start || $start[0] == "y" || $start[0] == "Y" ]]; then
-    systemctl --user start mycroft
-
-else
+    echo "Done installing OVOS"
     echo
-    echo "You can start the ovos services with `systemctl --user start mycroft`"
-    echo
-fi
+    read -p "Would you like to start ovos now? (Y/n): " start
+    if [[ -z "$start" || $start == y* || $start == Y* ]]; then
+        systemctl --user start mycroft
 
-echo
-echo "Enjoy your OVOS device"
+    else
+        echo
+        echo "You can start the ovos services with `systemctl --user start mycroft`"
+        echo
+    fi
+
+    echo
+    echo "Enjoy your OVOS device"
+fi
+echo $install after if
+
+
+
 exit 0

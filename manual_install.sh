@@ -105,7 +105,7 @@ function install_systemd (){
         systemctl --user enable mycroft-voice
         systemctl --user enable mycroft-skills
         systemctl --user enable mycroft-phal
-        systemctl --user enable mycroft-admin-phal
+        # systemctl --user enable mycroft-admin-phal
     fi
     echo
     echo "Done installing systemd files"
@@ -172,11 +172,6 @@ if [[ -z "$extra_skills" || $extra_skills == y* || $extra_skills == Y* ]]; then
     extra_skills="YES"
 fi
 echo
-echo $systemd
-echo $enabled
-echo $extra_skills
-echo
-echo
 echo "We are now ready to install OVOS"
 echo
 read -p "Type 'Y' to start install (any other key aborts): " install
@@ -199,7 +194,7 @@ if [[ $install == Y* || $install == y* ]]; then
 
     else
         echo
-        echo "You can start the ovos services with `systemctl --user start mycroft`"
+        echo "You can start the ovos services with 'systemctl --user start mycroft'"
         echo
     fi
 

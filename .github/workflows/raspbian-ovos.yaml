@@ -23,7 +23,7 @@ jobs:
           stage-list: stage0 stage1 stage2 ./stage-ovos
 
           # Host name of the image.
-          hostname: raspbian-ovos
+          hostname: raspOvos
 
           # Default keyboard keymap.
           keyboard-keymap: us

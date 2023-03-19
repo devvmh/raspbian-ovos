@@ -41,16 +41,6 @@ install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/bin"
 
 install -v -m 0755 files/home/ovos/.local/bin/bus-monitor "${ROOTFS_DIR}/home/ovos/.local/bin/bus-monitor"
 
-# xdg-data folder
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share"
-
-# preloaded precise-lite wakewords
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite"
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/wakewords"
-install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/wakewords/en"
-
-install -v -m 0644 files/home/ovos/.local/share/precise-lite/wakewords/en/hey_mycroft.tflite "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/wakewords/en/"
-
 # log directories
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state/mycroft"

@@ -7,6 +7,9 @@ case :$PATH: in
   *) PATH=/home/ovos/.local/bin:$PATH ;;
 esac
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 if [ -n "$BASH_VERSION" ]; then
   # include .bashrc if it exists
   if [ -f "$HOME/.bashrc" ]; then

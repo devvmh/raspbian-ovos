@@ -42,8 +42,12 @@ ENABLE_SSH=1
 # Set the locale
 LOCALE_DEFAULT="en_US.UTF-8"
 
+# Keyboard
+KEYBOARD_KEYMAP="us"
+KEYBOARD_LAYOUT="English (US)"
+
 # wpa country
-WPA_COUNTRY=US
+WPA_COUNTRY="US"
 
 # My timezone
 TIMEZONE_DEFAULT="America/Denver"

@@ -78,22 +78,22 @@ function install_systemd (){
     echo
     echo "Installing systemd files"
     echo
-    if [[ ! -d /home/$USER/.local/bin ]]; then
-        mkdir -p /home/$USER/.local/bin
+    if [[ ! -d $HOME/.local/bin ]]; then
+        mkdir -p $HOME/.local/bin
     fi
 
     # install the hook files
-    cp $TOP/home/ovos/.local/bin/mycroft* /home/$USER/.local/bin/
-    chmod +x /home/$USER/.local/bin/mycroft-systemd*
+    cp $TOP/usr/libexec/ovos* $HOME/.local/bin/
+    chmod +x $HOME/.local/bin/ovos-systemd*
 
     # sdnotify is required
     pip install sdnotify
 
     # install the service files
-    if [[ ! -d /home/$USER/.config/systemd/user ]]; then
-        mkdir -p /home/$USER/.config/systemd/user
+    if [[ ! -d $HOME/.config/systemd/user ]]; then
+        mkdir -p $HOME/.config/systemd/user
     fi
-    cp $TOP/usr/lib/systemd/user/* /home/$USER/.config/systemd/user/
+    cp $TOP/usr/lib/systemd/user/* $HOME/.config/systemd/user/
 
     if [[ $enabled == "YES" ]]; then
         echo
@@ -105,7 +105,6 @@ function install_systemd (){
         systemctl --user enable mycroft-voice
         systemctl --user enable mycroft-skills
         systemctl --user enable mycroft-phal
-        systemctl --user enable mycroft-admin-phal
     fi
     echo
     echo "Done installing systemd files"
@@ -139,14 +138,14 @@ function install_extra_skills (){
     pip install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
 
     # non pip skills
-    if [[ ! -d /home/$USER/.local/share/mycroft/skills ]]; then
-        mkdir -p /home/$USER/.local/share/mycroft/skills
+    if [[ ! -d $HOME/.local/share/mycroft/skills ]]; then
+        mkdir -p $HOME/.local/share/mycroft/skills
     fi
-    cd /home/$USER/.local/share/mycroft/skills
+    cd $HOME/.local/share/mycroft/skills
     # jarbasskills
     git clone https://github.com/JarbasSkills/skill-icanhazdadjokes.git
     pip install -r skill-icanhazdadjokes/requirements.txt
-    cd /home/$USER
+    cd $HOME
     echo
     echo "Done installing extra skills"
     echo
@@ -161,6 +160,7 @@ echo
 read -p "Do you want to install systemd files (Y/n): " systemd
 if [[ -z "$systemd" || $systemd == y* || $systemd == Y* ]]; then
     systemd="YES"
+    echo
     read -p "Do you want to automatically start the ovos services? (Y/n): " enabled
     if [[ -z "$enabled" || $enabled[0] == "y" || $enabled[0] == "Y" ]]; then
         enabled="YES"
@@ -171,11 +171,6 @@ read -p "Would you like to install extra skills to match the downloadable image?
 if [[ -z "$extra_skills" || $extra_skills == y* || $extra_skills == Y* ]]; then
     extra_skills="YES"
 fi
-echo
-echo $systemd
-echo $enabled
-echo $extra_skills
-echo
 echo
 echo "We are now ready to install OVOS"
 echo
@@ -195,19 +190,16 @@ if [[ $install == Y* || $install == y* ]]; then
     echo
     read -p "Would you like to start ovos now? (Y/n): " start
     if [[ -z "$start" || $start == y* || $start == Y* ]]; then
-        systemctl --user start mycroft
+        systemctl --user start ovos
 
     else
         echo
-        echo "You can start the ovos services with `systemctl --user start mycroft`"
+        echo "You can start the ovos services with `systemctl --user start ovos`"
         echo
     fi
 
     echo
     echo "Enjoy your OVOS device"
 fi
-echo $install after if
-
-
 
 exit 0

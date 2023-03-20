@@ -6,7 +6,7 @@ IMG_NAME="raspbian-ovos-dev"
 # images in stage2 (lite), stage4 and stage5. You probably want to hook in custom
 # stages before one of the exported stages. Otherwise, the action will make sure
 # any custom stage will include an image export directive.
-STAGE_LIST="stage0 stage1 stage2 /home/jbrodie/software/TESTING/raspbian-ovos/stage-ovos"
+STAGE_LIST="stage0 stage1 stage2 <full/path/to/git/clone>/raspbian-ovos/stage-ovos"
 
 # Host name of the image.
 TARGET_HOSTNAME="raspOvos"
@@ -41,6 +41,12 @@ ENABLE_SSH=1
 
 # Set the locale
 LOCALE_DEFAULT="en_US.UTF-8"
+
+# wpa country
+WPA_COUNTRY=US
+
+# My timezone
+TIMEZONE_DEFAULT="America/Denver"
 
 # If this feature is enabled, the action will configure pi-gen to not export any
 # stage as image but the last one defined in property 'stage-list'. This is

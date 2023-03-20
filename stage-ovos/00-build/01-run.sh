@@ -57,7 +57,6 @@ install -v -m 0755 files/usr/libexec/ovos-systemd-phal "${ROOTFS_DIR}/usr/libexe
 install -v -m 0755 files/usr/libexec/ovos-systemd-admin-phal "${ROOTFS_DIR}/usr/libexec/"
 
 # system services
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/systemd/system/ovos.service.wants"
 install -v -m 0644 files/usr/lib/systemd/system/ovos-admin-phal.service "${ROOTFS_DIR}/usr/lib/systemd/system/"
 install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/systemd/system-preset"
 install -v -m 0644 files/usr/lib/systemd/system-preset/10-ovos.conf "${ROOTFS_DIR}/usr/lib/systemd/system-preset/"

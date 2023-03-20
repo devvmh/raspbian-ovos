@@ -20,7 +20,8 @@ pip install ovos_PHAL==0.0.4
 pip install ovos_plugin_common_play==0.0.4
 pip install git+https://github.com/OpenVoiceOS/ovos-cli-client
 pip install ovos-bus-client
-pip install git+https://github.com/OpenVoiceOS/OVOS-Dashboard.git
+# Does not currently work correctly
+# pip install git+https://github.com/OpenVoiceOS/OVOS-Dashboard.git
 pip install ovos-vad-plugin-webrtcvad==0.0.1
 
 # install phal plugins
@@ -58,33 +59,33 @@ pip install ovos-ocp-rss-plugin==0.0.2
 pip install ovos-ocp-files-plugin==0.13.0
 pip install ovos-ocp-news-plugin==0.0.3
 
-# install skills
-
-# from NeonGeckoCom
-pip install git+https://github.com/NeonGeckoCom/skill-user_settings
-pip install git+https://github.com/NeonGeckoCom/skill-spelling
-# wont install this untill I figure out how to not auto download sample music
-# pip install git+https://github.com/NeonGeckoCom/skill-local_music
-pip install git+https://github.com/NeonGeckoCom/skill-caffeinewiz
-
-# from ovos
-pip install ovos-skill-date-time==0.2.2
-pip install ovos-skill-naptime==0.2.2
-pip install ovos-skill-personal==0.0.3
-pip install ovos-skill-volume==0.0.1
-pip install ovos-skill-stop==0.2.1
-pip install ovos-skill-hello-world==0.0.3
-
-# ovos fallbacks
-pip install ovos-skill-fallback-unknown==0.0.2
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-chatgpt
-
-# from ovos git
-pip install git+https://github.com/OpenVoiceOS/skill-alerts
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-weather
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-ddg
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-wolfie
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-news
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
-pip install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
+# # install skills
+#
+# # from NeonGeckoCom
+# pip install git+https://github.com/NeonGeckoCom/skill-user_settings
+# pip install git+https://github.com/NeonGeckoCom/skill-spelling
+# # wont install this untill I figure out how to not auto download sample music
+# # pip install git+https://github.com/NeonGeckoCom/skill-local_music
+# pip install git+https://github.com/NeonGeckoCom/skill-caffeinewiz
+#
+# # from ovos
+# pip install ovos-skill-date-time==0.2.2
+# pip install ovos-skill-naptime==0.2.2
+# pip install ovos-skill-personal==0.0.3
+# pip install ovos-skill-volume==0.0.1
+# pip install ovos-skill-stop==0.2.1
+# pip install ovos-skill-hello-world==0.0.3
+#
+# # ovos fallbacks
+# pip install ovos-skill-fallback-unknown==0.0.2
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-chatgpt
+#
+# # from ovos git
+# pip install git+https://github.com/OpenVoiceOS/skill-alerts
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-weather
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-ddg
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-wolfie
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-news
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
+# pip install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music

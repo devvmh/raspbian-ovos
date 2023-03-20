@@ -34,6 +34,12 @@ jobs:
           # Default locale of the system image.
           locale: en_US.UTF-8
 
+          # Default wifi country
+          wpa-country: US
+
+          # Default timezone
+          timezone: America/Denver
+
           # Name of the initial user account.
           username: ovos
 

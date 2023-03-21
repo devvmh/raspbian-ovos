@@ -1,2 +1,2 @@
-locales locales/locales_to_be_generated multiselect	All locales
+locales locales/locales_to_be_generated multiselect	en_US.UTF-8
 keyboard-configuration	keyboard-configuration/model	select	Generic 104-key PC

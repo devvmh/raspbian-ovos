@@ -91,7 +91,7 @@ install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/environment.d"
 install -v -m 0644 files/usr/lib/environment.d/99-environment.conf "${ROOTFS_DIR}/usr/lib/environment.d/"
 
 # balena stuff
-install -v -m 0644 files/usr/local/sbin/wifi-connect "${ROOTFS_DIR}/usr/local/sbin/"
+install -v -m 0755 files/usr/local/sbin/wifi-connect "${ROOTFS_DIR}/usr/local/sbin/"
 cp -rv files/usr/local/share/wifi-connect "${ROOTFS_DIR}/usr/local/share/"
 
 install -v -m 0755 files/install_ovos.sh "${ROOTFS_DIR}/"

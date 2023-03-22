@@ -45,7 +45,7 @@ ENABLE_SSH=1
 LOCALE_DEFAULT="en_US.UTF-8"
 
 # Keyboard
-KEYBOARD_KEYMAP="American English"
+KEYBOARD_KEYMAP="us"
 KEYBOARD_LAYOUT="English (US)"
 
 # wpa country

@@ -23,6 +23,10 @@ install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev/rules.d"
 install -v -m 0644 files/etc/udev/rules.d/91-pulseaudio-GeneralPlus.rules "${ROOTFS_DIR}/etc/udev/rules.d/"
 
+# locale
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/wpa_supplicant"
+install -v -m 0600 files/etc/wpa_supplicant/wpa_supplicant.conf "${ROOTFS_DIR}/etc/wpa_supplicant/"
+
 # home directory
 
 # bash scripts
@@ -44,6 +48,13 @@ install -v -m 0755 files/home/ovos/.local/bin/bus-monitor "${ROOTFS_DIR}/home/ov
 # log directories
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/state/mycroft"
+
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share"
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite"
+install -v -m 0644 files/home/ovos/.local/share/precise-lite/hey_mycroft.tflite "${ROOTFS_DIR}/home/ovos/.local/share/precise-lite/"
+
+install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/vosk"
+cp -rv files/home/ovos/.local/share/vosk/* "${ROOTFS_DIR}/home/ovos/.local/share/vosk/"
 
 # /usr
 
@@ -79,8 +90,15 @@ install -v -m 0644 files/usr/lib/systemd/user-preset/10-ovos.preset "${ROOTFS_DI
 install -v -d -m 0755 "${ROOTFS_DIR}/usr/lib/environment.d"
 install -v -m 0644 files/usr/lib/environment.d/99-environment.conf "${ROOTFS_DIR}/usr/lib/environment.d/"
 
+# balena stuff
+install -v -m 0755 files/usr/local/sbin/wifi-connect "${ROOTFS_DIR}/usr/local/sbin/"
+cp -rv files/usr/local/share/wifi-connect "${ROOTFS_DIR}/usr/local/share/"
+
 install -v -m 0755 files/install_ovos.sh "${ROOTFS_DIR}/"
 install -v -m 0755 files/install_skills.sh "${ROOTFS_DIR}/"
+
+# try enabling ssh from here
+touch "${ROOTFS_DIR}/boot/ssh"
 
 # install ovos-core
 on_chroot << EOF

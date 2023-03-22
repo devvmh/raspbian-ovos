@@ -11,6 +11,7 @@ python3-setuptools
 python3-pip
 python3-fann2
 python3-vlc
+python3-numpy
 libtool
 libffi-dev
 libssl-dev

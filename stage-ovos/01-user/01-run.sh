@@ -2,10 +2,15 @@
 
 set -exu
 
+install -v -m 0644 files/first_boot "${ROOTFS_DIR}/first_boot"
+on_chroot <<EOF
+chown ovos:ovos /first_boot
+EOF
+
 # bash scripts
-install -v -m 0664 files/.bashrc "${ROOTFS_DIR}/home/ovos/.bashrc"
-install -v -m 0664 files/.bash_profile "${ROOTFS_DIR}/home/ovos/.bash_profile"
-install -v -m 0664 files/.cli_login.sh "${ROOTFS_DIR}/home/ovos/.cli_login.sh"
+install -v -m 0644 files/.bashrc "${ROOTFS_DIR}/home/ovos/.bashrc"
+install -v -m 0644 files/.bash_profile "${ROOTFS_DIR}/home/ovos/.bash_profile"
+install -v -m 0644 files/.cli_login.sh "${ROOTFS_DIR}/home/ovos/.cli_login.sh"
 
 # user level mycroft.conf
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config"

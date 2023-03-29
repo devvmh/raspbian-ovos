@@ -1,10 +1,14 @@
 # raspbian-ovos
 
+<strong>** DEV BRANCH **</strong>
+
+<strong>Images built from this branch are NOT guarenteed to always work.</strong>
+
 Run ovos on top of RaspberryPiOS
 
 Prebuilt images can be found on the [OpenVoiceOS Downloads Page](https://downloads.openvoiceos.com/images/picroft/github/workspace/pi-gen/deploy/)
 
-Check out the [community documentation](https://openvoiceos.github.io/community-docs/raspbian_ovos/), <br>*(Waiting on [Community Docs PR](https://github.com/OpenVoiceOS/community-docs/pull/48))* for information on how to install manually.  [Look Here](https://github.com/builderjer/community-docs/blob/raspbian-ovos/docs/raspbian_ovos.md) until then.
+Check out the [community documentation](https://openvoiceos.github.io/community-docs/raspbian_ovos/) for information on how to install manually or build an image yourself.
 
 Purpose of this guide
 

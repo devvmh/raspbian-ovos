@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pi-gen-ovos:
+  pi-gen-picroft:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

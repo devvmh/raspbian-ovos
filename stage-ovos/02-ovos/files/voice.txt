@@ -1,4 +1,4 @@
-#ovos-ww-plugin-precise-lite==0.1.1
+git+https://github.com/OpenVoiceOS/raspbian-ovos.git
 ovos-ww-plugin-openwakeword==0.1.0
 ovos-ww-plugin-pocketsphinx==0.1.3
 ovos-ww-plugin-vosk==0.1.1

@@ -69,7 +69,7 @@ jobs:
           enable-noobs: false
 
           # Enable SSH access to Pi.
-          enable-ssh: 1
+          enable-ssh: 0
 
           # If this feature is enabled, the action will configure pi-gen to not export any
           # stage as image but the last one defined in property 'stage-list'. This is
@@ -99,6 +99,7 @@ jobs:
           pi-gen-dir: pi-gen
 
           # GitHub repository to fetch pi-gen from, must be a fork from RPi-Distro/pi-gen.
+
           pi-gen-repository: builderjer/pi-gen
 
           # Release version of pi-gen to use. This can both be a branch or tag name known in

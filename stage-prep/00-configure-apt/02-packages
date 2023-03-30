@@ -13,7 +13,6 @@ portaudio19-dev
 mpg123
 screen
 flac
-curl
 libicu-dev
 libjpeg-dev
 libfann-dev

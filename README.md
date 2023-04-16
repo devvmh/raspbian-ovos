@@ -8,7 +8,7 @@ Run ovos on top of RaspberryPiOS
 
 Prebuilt images can be found on the [OpenVoiceOS Downloads Page](https://downloads.openvoiceos.com/images/raspbian/)
 
-Check out the [community documentation](https://openvoiceos.github.io/community-docs/raspbian_ovos/) for information on how to install manually or build an image yourself.
+Check out the [community documentation](https://openvoiceos.github.io/community-docs/install_raspbian/) for information on how to install manually or build an image yourself.
 
 Purpose of this guide
 

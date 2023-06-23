@@ -25,9 +25,9 @@ fi
 install -v -m 0755 files/ovos-systemd-skills "${ROOTFS_DIR}/usr/libexec/ovos-systemd-skills"
 install -v -m 0644 files/ovos-skills.service "${ROOTFS_DIR}/etc/systemd/user/ovos-skills.service"
 
-echo "enable ovos-skills.service" >> "${ROOTFS_DIR}/etc/systemd/user/user-preset/10-ovos-user.preset"
+echo "enable ovos-skills.service" >> "${ROOTFS_DIR}/etc/systemd/user-preset/10-ovos-user.preset"
 
 install -v -m 0755 files/ovos-systemd-skills "${ROOTFS_DIR}/usr/libexec/ovos-systemd-skills"
 install -v -m 0644 files/ovos-skills.service "${ROOTFS_DIR}/etc/systemd/user/ovos-skills.service"
 
-echo "enable ovos-skills.service" "${ROOTFS_DIR}/etc/systemd/user/user-presets/10-ovos-user.preset"
+echo "enable ovos-skills.service" "${ROOTFS_DIR}/etc/systemd/user-presets/10-ovos-user.preset"

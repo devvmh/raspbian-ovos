@@ -25,12 +25,12 @@ install -v -m 0644 files/99-media-automount.rules "${ROOTFS_DIR}/etc/udev/rules.
 install -v -m 0755 files/media-automount "${ROOTFS_DIR}/usr/bin/media-automount"
 install -v -d -m 0755 "${ROOTFS_DIR}/media"
 
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/systemd/system/system-preset"
-install -v -m 0644 files/10-ovos-system.preset "${ROOTFS_DIR}/etc/systemd/system/system-preset/10-ovos-system.preset"
-install -v -m 0644 files/99-ovos-default.preset "${ROOTFS_DIR}/etc/systemd/system/system-preset/99-ovos-default.preset"
-install -v -d -m 0755 "${ROOTFS_DIR}/etc/systemd/user/user-preset"
-install -v -m 0644 files/10-ovos-user.preset "${ROOTFS_DIR}/etc/systemd/user/user-preset/10-ovos-user.preset"
-install -v -m 0644 files/99-ovos-user-default.preset "${ROOTFS_DIR}/etc/systemd/user/user-preset/99-ovos-user-default.preset"
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/systemd/system-preset"
+install -v -m 0644 files/10-ovos-system.preset "${ROOTFS_DIR}/etc/systemd/system-preset/10-ovos-system.preset"
+install -v -m 0644 files/99-ovos-default.preset "${ROOTFS_DIR}/etc/systemd/system-preset/99-ovos-default.preset"
+install -v -d -m 0755 "${ROOTFS_DIR}/etc/systemd/user-preset"
+install -v -m 0644 files/10-ovos-user.preset "${ROOTFS_DIR}/etc/systemd/user-preset/10-ovos-user.preset"
+install -v -m 0644 files/99-ovos-user-default.preset "${ROOTFS_DIR}/etc/systemd/user-preset/99-ovos-user-default.preset"
 
 install -v -d -m 0755 "${ROOTFS_DIR}/tmp/mycroft"
 

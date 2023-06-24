@@ -13,7 +13,7 @@ jobs:
       - name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ovosimages.ziggyai.online
+          host: https://ovosimages.ziggyai.online
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: 11226

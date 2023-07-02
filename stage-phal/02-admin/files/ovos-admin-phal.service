@@ -17,5 +17,4 @@ StartLimitBurst=4
 #WatchdogSec=30s
 
 [Install]
-WantedBy=ovos.service
-
+WantedBy=default.target

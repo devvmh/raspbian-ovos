@@ -217,7 +217,8 @@ if [[ $install == Y* || $install == y* ]]; then
     if [[ ! -d $HOME/.local/bin ]]; then
         mkdir -p $HOME/.local/bin
     fi
-    PATH=/home/ovos/.local/bin:$PATH
+    PATH=$HOME/.local/bin:$PATH
+    
     install_core
 
     if [[ $systemd == "YES" ]]; then
@@ -241,9 +242,11 @@ if [[ $install == Y* || $install == y* ]]; then
     echo ""
     echo "1. Consider creating an .asoundrc and check your microphone with alsamixer, arecord, and aplay."
     echo ""
-    echo "2. You can find documentation at https://github.com/OpenVoiceOS/community-docs/blob/master/docs/install_raspbian.md?rgh-link-date=2023-06-16T19%3A13%3A14Z#step-3-install-ovos-core"
+    echo "2. You can find documentation at https://openvoiceos.github.io/community-docs/install_raspbian/"
     echo ""
-    echo "3. After a reboot /home/ovos/.local/bin will be added to your path and give you access the ovos command line utilities."
+    echo "3. You can find pre-built OVOS/PI images at https://ovosimages.ziggyai.online/raspbian/"
+    echo ""
+    echo "4. After a reboot $HOME/.local/bin will be added to your path and give you access the ovos command line utilities."
     echo ""
     echo "Enjoy your OVOS device"
 fi

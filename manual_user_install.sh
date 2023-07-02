@@ -77,7 +77,7 @@ function install_core (){
     if [[ ! -d $HOME/.config/mycroft ]]; then
         mkdir -p $HOME/.config/mycroft
     fi
-    cp $SCRIPT_DIR/stage-ovos/02-ovos/files/mycroft.conf $HOME/.config/mycroft/
+    cp $SCRIPT_DIR/stage-core/01-ovos-core/files/mycroft.conf $HOME/.config/mycroft/
     echo $SCRIPT_DIR
     echo
     echo "Done installing OVOS core"
@@ -88,16 +88,15 @@ function install_systemd (){
     echo "Installing systemd files"
     echo
 
-    cd $SCRIPT_DIR/stage-ovos/00-system/files
-    sed -i s/multi-user/default/g ovos.service
-    for f in *.service ; do
-      sed -i s,/usr/libexec,/home/ovos/.local/bin,g $f
-      # extend the timeouts
-      # sed -i s/=1m/=2m/g $f
-    done
-
     # install the hook files
-    cp ovos-systemd*  $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-core/01-ovos-core/files/ovos-systemd-skills $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-core/02-messagebus/files/ovos-systemd-messagebus.service $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-systemd-audio $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-systemd-dinkum-listener $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-systemd-phal $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-systemd-admin-phal $HOME/.local/bin
+
+#     cp ovos-systemd*  $HOME/.local/bin/
     chmod +x $HOME/.local/bin/ovos-systemd*
 
     # sdnotify is required
@@ -107,8 +106,19 @@ function install_systemd (){
     if [[ ! -d $HOME/.config/systemd/user ]]; then
         mkdir -p $HOME/.config/systemd/user
     fi
-    sed -i s/User=root/#User=root/g ovos-admin-phal.service
-    cp *.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-core/01-ovos-core/files/ovos.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-core/01-ovos-core/files/ovos-skills.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-core/02-messagebus/files/ovos-messagebus.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-audio.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-dinkum-listener.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-phal.service $HOME/.config/systemd/user/
+    cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-admin-phal.service $HOME/.config/systemd/user/
+
+    for f in $HOME/.config/systemd/user/*.service ; do
+        sed -i s,/usr/libexec,/home/ovos/.local/bin,g $f
+        # extend the timeouts
+        # sed -i s/=1m/=2m/g $f
+    done
 
     if [[ $enabled == "YES" ]]; then
         echo

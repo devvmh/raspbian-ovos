@@ -22,6 +22,8 @@ ln -s /etc/environment /etc/environment.d/99-environment
 EOF
 fi
 
+install -v -m 0644 files/ovos.service "${ROOTFS_DIR}/etc/systemd/user/ovos.service"
+
 install -v -m 0755 files/ovos-systemd-skills "${ROOTFS_DIR}/usr/libexec/ovos-systemd-skills"
 install -v -m 0644 files/ovos-skills.service "${ROOTFS_DIR}/etc/systemd/user/ovos-skills.service"
 

@@ -90,7 +90,7 @@ function install_systemd (){
 
     # install the hook files
     cp $SCRIPT_DIR/stage-core/01-ovos-core/files/ovos-systemd-skills $HOME/.local/bin/
-    cp $SCRIPT_DIR/stage-core/02-messagebus/files/ovos-systemd-messagebus.service $HOME/.local/bin/
+    cp $SCRIPT_DIR/stage-core/02-messagebus/files/ovos-systemd-messagebus $HOME/.local/bin/
     cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-systemd-audio $HOME/.local/bin/
     cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-systemd-dinkum-listener $HOME/.local/bin/
     cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-systemd-phal $HOME/.local/bin/

@@ -12,7 +12,6 @@ echo "                     --- Welcome to OpenVoiceOS ---              "
 echo "                      RASBPIAN-OVOS Edition v0.0.1                  "
 echo
 echo "OVOS Tool COMMANDs:"
-echo "  ovos-cli-client        Command line client, useful for debugging"
 echo "  ovos-config             Manage your local OVOS configuration files"
 echo "  ovos-listen            Activate the microphone to listen for a command"
 echo "  ovos-speak  <phrase>   Have OVOS speak a phrase to the user"

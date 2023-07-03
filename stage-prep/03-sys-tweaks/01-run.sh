@@ -52,17 +52,3 @@ locale-gen
 
 EOF
 
-# Test stuff for mk1
-
-sed 's/dtparam=audio=on/#dtparam=audio=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/#dtparam=i2c_arm=on/dtparam=i2c_arm=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/#dtparam=i2s=on/dtparam=i2s=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/#dtparam=spi=on/dtparam=spi=on/g' ${ROOTFS_DIR}/boot/config.txt
-
-cat >> ${ROOTFS_DIR}/boot/config.txt << EOF
-# Disable Bluetooth, it interferes with serial port
-dtoverlay=pi3-disable-bt
-dtoverlay=pi3-miniuart-bt
-# Enable Mark 1 soundcard drivers
-dtoverlay=rpi-proto
-EOF

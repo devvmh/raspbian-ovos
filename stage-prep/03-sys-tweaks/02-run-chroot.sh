@@ -4,15 +4,36 @@ cd zram-swap
 cd ..
 rm -rf zram-swap
 
-cat >> /boot/config.txt << EOF
-gpu_mem=16
-disable_splash=1
+# anonymous auth for PA
+sed -i 's/^load-module module-native-protocol-unix/load-module module-native-protocol-unix auth-anonymous=1/' /etc/pulse/system.pa
+# set default sample rate
+sed -i 's/^; default-sample-rate = 44100/default-sample-rate = 44100/' /etc/pulse/daemon.conf
+echo '# Edit boot configuration settings in /boot/config.txt'
+# Uncomment all of these to enable the optional hardware interfaces
+sed -i 's/^#dtparam=i2c_arm=on/dtparam=i2c_arm=on/' /boot/config.txt
+sed -i 's/^#dtparam=i2s=on/dtparam=i2s=on/' /boot/config.txt
+sed -i 's/^#dtparam=spi=on/dtparam=spi=on/' /boot/config.txt
+# Comment out the following to disable audio (loads snd_bcm2835)
+sed -i 's/^dtparam=audio=on/#dtparam=audio=on/' /boot/config.txt
+# Add the following lines at the bottom:
 
-[pi3]
+cat >> /boot/config.txt << EOF
 
 # Disable Bluetooth, it interferes with serial port
 dtoverlay=pi3-disable-bt
 dtoverlay=pi3-miniuart-bt
+
+# Enable Mark 1 soundcard drivers
+dtoverlay=rpi-proto
+
+# Change gpu memory
+gpu_mem=16
+
+# Obvious
+disable_splash=1
+
+# Speed things up a bit
+[pi3]
 
 force_turbo=1
 boot_delay=1

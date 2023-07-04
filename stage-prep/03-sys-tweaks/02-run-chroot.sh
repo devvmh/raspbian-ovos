@@ -5,6 +5,7 @@ cd ..
 rm -rf zram-swap
 
 cat >> /boot/config.txt << EOF
+
 gpu_mem=16
 disable_splash=1
 

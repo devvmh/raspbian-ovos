@@ -221,6 +221,10 @@ if [[ $install == Y* || $install == y* ]]; then
     
     install_core
 
+    # Remove ramdisk logs
+    # Uncomment this if you create a ramdisk
+    sed -i '42,46d' $USER/.config/mycroft/mycroft.conf
+
     if [[ $systemd == "YES" ]]; then
         install_systemd
     fi

@@ -5,6 +5,7 @@ install -v -d -m 0755 "${ROOTFS_DIR}/etc/pulse"
 install -v -m 0644 files/pulseaudio-daemon.conf "${ROOTFS_DIR}/etc/pulse/"
 install -v -m 0644 files/pulseaudio-system.pa "${ROOTFS_DIR}/etc/pulse/"
 
+
 install -v -m 0644 files/asound.state "${ROOTFS_DIR}/var/lib/alsa/asound.state"
 
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"

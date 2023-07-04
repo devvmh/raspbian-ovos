@@ -2,8 +2,6 @@
 
 # Create a ramdisk
 echo "tmpfs /ramdisk tmpfs rw,nodev,nosuid,size=20M 0 0" >> "${ROOTFS_DIR}/etc/fstab"
-# TODO: setup swap space
-# DONE: uses zram. setup with run-chroot.sh
 
 install -v -m 0644 files/97-ovos.conf "${ROOTFS_DIR}/etc/sysctl.d/97-ovos.conf"
 
@@ -50,20 +48,4 @@ dpkg-reconfigure --frontend noninteractive locales
 sed -i 's/^# *\(en_US.UTF-8\)/\1/' /etc/locale.gen
 locale-gen
 
-EOF
-
-# Test stuff for mk1
-
-sed 's/dtparam=audio=on/#dtparam=audio=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/#dtparam=i2c_arm=on/dtparam=i2c_arm=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/#dtparam=i2s=on/dtparam=i2s=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/#dtparam=spi=on/dtparam=spi=on/g' ${ROOTFS_DIR}/boot/config.txt
-sed 's/dtoverlay=vc4-kms-v3d/#dtoverlay=vc4-kms-v3d/g' ${ROOTFS_DIR}/boot/config.txt
-
-cat >> ${ROOTFS_DIR}/boot/config.txt << EOF
-# Disable Bluetooth, it interferes with serial port
-dtoverlay=pi3-disable-bt
-dtoverlay=pi3-miniuart-bt
-# Enable Mark 1 soundcard drivers
-dtoverlay=rpi-proto
 EOF

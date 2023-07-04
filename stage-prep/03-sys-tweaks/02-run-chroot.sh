@@ -4,6 +4,12 @@ cd zram-swap
 cd ..
 rm -rf zram-swap
 
+# Pulse setup
+# Comment out `suspend_on_idle` from both system.pa and default.pa
+sed -i "s\load-module module-suspend-on-idle\#load-module module-suspend-on-idle\g" /etc/pulse/default.pa
+sed -i "s\load-module module-suspend-on-idle\#load-module module-suspend-on-idle\g" /etc/pulse/system.pa
+sed -i "s\load-module module-udev-detect\load-module module-udev-detect tsched=0\g" /etc/pulse/system.pa
+
 # anonymous auth for PA
 sed -i 's/^load-module module-native-protocol-unix/load-module module-native-protocol-unix auth-anonymous=1/' /etc/pulse/system.pa
 # set default sample rate

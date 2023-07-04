@@ -61,6 +61,9 @@ load-module module-default-device-restore
 ### Enable positioned event sounds
 load-module module-position-event-sounds
 
+### Automatically suspend sinks/sources that become idle for too long  - comment out
+# load-module module-suspend-on-idle
+
 ### OpenVoiceOS Audio Settings
 load-module module-role-ducking
 load-module module-combine-sink sink_name=OpenVoiceOS

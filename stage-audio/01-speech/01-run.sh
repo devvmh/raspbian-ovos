@@ -11,6 +11,7 @@ sed -i "s\load-module module-suspend-on-idle\#load-module module-suspend-on-idle
 sed -i "s\load-module module-udev-detect\load-module module-udev-detect tsched=0\g" ${ROOTFS_DIR}/etc/pulse/system.pa
 
 install -v -m 0644 files/asound.state "${ROOTFS_DIR}/etc/asound.state"
+install -v -m 0644 files/asound.conf "${ROOTFS_DIR}/etc/asound.conf"
 
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev/rules.d"

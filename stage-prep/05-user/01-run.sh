@@ -11,3 +11,4 @@ install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/systemd"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/systemd/user"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/systemd/user/ovos.service.wants"
 
+install -v -m 0644 files/profile "${ROOTFS_DIR}/etc/profile"

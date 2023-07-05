@@ -10,5 +10,5 @@ pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
 pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
 
 # Remove some auto installed stuff
-pip3 uninstall ovos-skill-filebrowser
-pip3 uninstall ovos-skill-installer
+pip3 uninstall -y ovos-skill-filebrowser
+pip3 uninstall -y ovos-skill-installer

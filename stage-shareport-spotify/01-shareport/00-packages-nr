@@ -1,4 +1,5 @@
 autoconf
+automake
 libpopt-dev
 libconfig-dev
 libsoxr-dev

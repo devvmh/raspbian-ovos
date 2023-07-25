@@ -16,11 +16,13 @@ function install_core (){
     pip3 install git+https://github.com/OpenVoiceOS/ovos-audio
     pip3 install git+https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin
     pip3 install git+https://github.com/OpenVoiceOS/ovos-messagebus
+    # padatious required to support newest ovos-core
     # pip3 install padatious
 
     # dinkum listener
     pip3 install git+https://github.com/OpenVoiceOS/ovos-dinkum-listener
     pip3 install git+https://github.com/OpenVoiceOS/ovos-vad-plugin-silero
+    pip3 install git+https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx
 
     #Precise-lite wake-word (ww) cluster
     pip3 install git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise
@@ -38,6 +40,7 @@ function install_core (){
 
     # install text to speech (tts)
     pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3-server
+    pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic
     sudo apt install -y espeak-ng
     pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-piper
     pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-server-plugin
@@ -46,8 +49,6 @@ function install_core (){
     pip3 install git+https://github.com/OpenVoiceOS/ovos-utils
     pip3 install git+https://github.com/OpenVoiceOS/ovos-bus-client
     pip3 install git+https://github.com/OpenVoiceOS/ovos-plugin-manager
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-workshop
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-lingua-franca
     pip3 install git+https://github.com/OpenVoiceOS/ovos-cli-client
 
     # install phal components
@@ -94,10 +95,10 @@ function install_systemd (){
     cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-systemd-audio $HOME/.local/bin/
     cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-systemd-dinkum-listener $HOME/.local/bin/
     cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-systemd-phal $HOME/.local/bin/
-    cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-systemd-admin-phal $HOME/.local/bin
+    sudo cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-systemd-admin-phal /usr/libexec
 
-#     cp ovos-systemd*  $HOME/.local/bin/
     chmod +x $HOME/.local/bin/ovos-systemd*
+    echo $sudoPW | sudo -S chmod +x /usr/libexec/ovos-systemd-admin-phal
 
     # sdnotify is required
     pip3 install sdnotify
@@ -112,7 +113,7 @@ function install_systemd (){
     cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-audio.service $HOME/.config/systemd/user/
     cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-dinkum-listener.service $HOME/.config/systemd/user/
     cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-phal.service $HOME/.config/systemd/user/
-    cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-admin-phal.service $HOME/.config/systemd/user/
+    echo $sudoPW |  sudo -S cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-admin-phal.service /etc/systemd/system/
 
     for f in $HOME/.config/systemd/user/*.service ; do
         sed -i s,/usr/libexec,/home/ovos/.local/bin,g $f
@@ -130,8 +131,9 @@ function install_systemd (){
         systemctl --user enable ovos-audio
         systemctl --user enable ovos-skills
         systemctl --user enable ovos-phal
-        systemctl --user enable ovos-admin-phal
+        echo $sudoPW | sudo -S systemctl enable ovos-admin-phal
         systemctl --user daemon-reload
+        echo $sudoPW | sudo -S systemctl daemon-reload
     fi
 
     cd $SCRIPT_DIR
@@ -194,10 +196,18 @@ read -p "Do you want to install systemd files (Y/n): " systemd
 if [[ -z "$systemd" || $systemd == y* || $systemd == Y* ]]; then
     systemd="YES"
     echo
+    read -s -p "Enter your $USER password: " sudoPW
+    echo
+    echo
     read -p "Do you want to automatically start the ovos services? (Y/n): " enabled
     if [[ -z "$enabled" || $enabled == y* || $enabled == Y* ]]; then
         enabled="YES"
     fi
+fi
+echo
+read -p "Are you using a ramdisk at /ramdisk/mycroft? (Y/n): " ram_disk
+if [[ -z "$ram_disk" || $ram_disk == y* || $ram_disk == Y* ]]; then
+    ram_disk="YES"
 fi
 echo
 read -p "Would you like to install extra skills to match the downloadable image? (Y/n): " extra_skills
@@ -218,12 +228,13 @@ if [[ $install == Y* || $install == y* ]]; then
         mkdir -p $HOME/.local/bin
     fi
     PATH=$HOME/.local/bin:$PATH
-    
+
     install_core
 
-    # Remove ramdisk logs
-    # Uncomment this if you create a ramdisk
-    sed -i '42,46d' $USER/.config/mycroft/mycroft.conf
+    # in preparation for someday asking the location of the ramdisk and putting it in
+    if [[ $ramdisk != "YES" ]]; then
+       sed -i /"logs"/,+4d $HOME/.config/mycroft/mycroft.conf
+    fi
 
     if [[ $systemd == "YES" ]]; then
         install_systemd
@@ -238,6 +249,8 @@ if [[ $install == Y* || $install == y* ]]; then
     read -p "Would you like to start ovos now? (Y/n): " start
     if [[ -z "$start" || $start == y* || $start == Y* ]]; then
         systemctl --user start ovos
+        sleep 1
+        echo $sudoPW | sudo -S systemctl start ovos-admin-phal
     else
         echo
         echo "You can start the ovos services with 'systemctl --user start ovos'"
@@ -250,9 +263,10 @@ if [[ $install == Y* || $install == y* ]]; then
     echo ""
     echo "3. You can find pre-built OVOS/PI images at https://ovosimages.ziggyai.online/raspbian/"
     echo ""
-    echo "4. After a reboot $HOME/.local/bin will be added to your path and give you access the ovos command line utilities."
+    echo "4. After a reboot $HOME/.local/bin will be added to your path and give you access to the ovos command line utilities."
     echo ""
     echo "Enjoy your OVOS device"
 fi
 
 exit 0
+

@@ -1,6 +1,8 @@
+source /home/ovos/.venv/bin/activate
+
 # ovos skills
 pip3 install git+https://github.com/OpenVoiceOS/ovos-skill-easter-eggs
-pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-dictation@tests
+#pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-dictation
 
 # jarbas skills
 pip3 install git+https://github.com/JarbasSkills/skill-icanhazdadjokes
@@ -16,3 +18,5 @@ pip3 install git+https://github.com/JarbasSkills/skill-icanhazdadjokes
 #pip3 install git+https://github.com/NeonGeckoCom/skill-caffeinewiz
 #pip3 install git+https://github.com/NeonGeckoCom/skill-translation
 #pip3 install git+https://github.com/NeonGeckoCom/skill-audio_record
+
+deactivate

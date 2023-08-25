@@ -1,3 +1,5 @@
+source /home/ovos/.venv/bin/activate
+
 pip3 install git+https://github.com/OpenVoiceOS/ovos_skill_manager
 
 pip3 install git+https://github.com/OpenVoiceOS/skill-alerts
@@ -12,3 +14,5 @@ pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
 # Remove some auto installed stuff
 pip3 uninstall -y ovos-skill-filebrowser
 pip3 uninstall -y ovos-skill-installer
+
+deactivate

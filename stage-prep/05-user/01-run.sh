@@ -11,3 +11,14 @@ install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/systemd"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/systemd/user"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.config/systemd/user/ovos.service.wants"
 
+on_chroot << EOF
+
+python -m venv /home/ovos/.venv
+
+source /home/ovos/.venv/bin/activate
+
+pip install -U pip wheel setuptools
+
+deactivate
+
+EOF

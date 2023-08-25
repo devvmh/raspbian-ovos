@@ -17,8 +17,8 @@ echo "  ovos-listen            Activate the microphone to listen for a command"
 echo "  ovos-speak  <phrase>   Have OVOS speak a phrase to the user"
 echo "  ovos-say-to <phrase>   Send an utterance to OVOS as if spoken by a user"
 echo
-echo "OVOS Skill Manager COMMANDs:"
-echo "  osm install <skill|url>   Install mycroft skills"
-echo "  osm remove  <skill|url>   Uninstall mycroft skills"
-echo "  osm update                Update installed skills"
-echo
+# echo "OVOS Skill Manager COMMANDs:"
+# echo "  osm install <skill|url>   Install mycroft skills"
+# echo "  osm remove  <skill|url>   Uninstall mycroft skills"
+# echo "  osm update                Update installed skills"
+# echo

@@ -1,9 +1,21 @@
 #!/bin/bash -e
 
-on_chroot << EOF
+#######################################
+#
+# WIP #
+#
+# Deciding on what package is better
+#
+#######################################
 
-curl -sL https://dtcooper.github.io/raspotify/install.sh | bash
+# on_chroot << EOF
+#
+# curl -sL https://dtcooper.github.io/raspotify/install.sh | bash
+#
+# EOF
+#
+# echo "enable raspotify" >> "${ROOTFS_DIR}/etc/systemd/system-preset/10-ovos-system.preset"
 
-EOF
+curl https://sh.rustup.rs -sSf | sh -s -- -y
 
-echo "enable raspotify" >> "${ROOTFS_DIR}/etc/systemd/system-preset/10-ovos-system.preset"
+# wget https://github.com/Spotifyd/spotifyd/releases

@@ -1,73 +1,75 @@
 #!/bin/bash
 
+# Exit on error
+# If something goes wrong just stop. The script should be re-runnable
+# and it allows the user to see issues at once rather than having
+# scroll back and figure out what went wrong.
+set -e
+
 # tested with a clean 64 bit installation of Raspbian-Lite
+
+# Define some python groups (these are repository names, not PyPI names!)
+# Any group can be disabled by setting the value before running the script
+# Eg to skip installing Dinkum
+# $ export OVOS_DINKUM_REPOS=""
+: ${OVOS_CORE_REPOS:="ovos-backend-client ovos-core ovos-audio ovos-ocp-audio-plugin ovos-messagebus"}
+: ${OVOS_DINKUM_REPOS:="ovos-dinkum-listener ovos-vad-plugin-silero ovos-ww-plugin-pocketsphinx"}
+: ${OVOS_PRECISE_LITE_REPOS:="ovos-ww-plugin-precise ovos-ww-plugin-precise-lite ovos-workshop ovos-lingua-franca"}
+: ${OVOS_STT_REPOS:="ovos-microphone-plugin-alsa ovos-stt-plugin-server"}
+: ${OVOS_TTS_REPOS:="ovos-tts-plugin-mimic3-server ovos-tts-plugin-mimic ovos-tts-plugin-piper ovos-tts-server-plugin"}
+: ${OVOS_EXTRA_REPOS:="ovos-config ovos-utils ovos-bus-client ovos-plugin-manager ovos-cli-client"}
+: ${OVOS_PHAL_REPOS:="ovos-PHAL ovos-phal-plugin-connectivity-events ovos-phal-plugin-system ovos-PHAL-plugin-ipgeo ovos-PHAL-plugin-oauth ovos-phal-plugin-dashboard ovos-phal-plugin-alsa"}
+: ${OVOS_SKILLS_REPOS:="skill-ovos-volume skill-ovos-fallback-unknown skill-ovos-stop skill-alerts skill-ovos-personal skill-ovos-naptime skill-ovos-date-time"}
+: ${OVOS_EXTRA_SKILL_REPOS:="skill-ovos-weather skill-ovos-hello-world skill-ovos-ddg skill-ovos-wolfie skill-ovos-wikipedia skill-ovos-fallback-chatgpt skill-ovos-news skill-ovos-somafm skill-ovos-youtube-music"}
+
+function get_src() {
+    mkdir -p ${OVOS_SOURCE}
+    pushd ${OVOS_SOURCE}
+    echo Cloning source to ${OVOS_SOURCE}
+    for p in $OVOS_CORE_REPOS $OVOS_DINKUM_REPOS $OVOS_PRECISE_LITE_REPOS $OVOS_STT_REPOS $OVOS_TTS_REPOS $OVOS_EXTRA_REPOS $OVOS_PHAL_REPOS; do
+	echo Cloning $p
+	[[ -d $p ]] || git clone https://github.com/OpenVoiceOS/$p
+    done
+    popd
+}
 
 function install_core (){
     echo "Installing OVOS core"
     echo
 
     # set up the Raspberry Pi
-    sudo apt install -y build-essential python3-dev python3-pip swig libssl-dev libfann-dev portaudio19-dev libpulse-dev cmake libncurses-dev pulseaudio-utils pulseaudio
-    pulseaudio -D
+    echo $sudoPW | sudo -S apt install -y build-essential python3-dev python3-pip python3-venv swig libssl-dev libfann-dev portaudio19-dev libpulse-dev cmake libncurses-dev pulseaudio-utils pulseaudio
 
-    # install ovos-core
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-backend-client
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-core
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-audio
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-ocp-audio-plugin
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-messagebus
+    # make sure pulseaudio is running
+    pulseaudio --check || pulseaudio -D
+
     # padatious required to support newest ovos-core
-    # pip3 install padatious
+    # fann version must be fixed as raspbian libfann-dev is too old for latest
+    pip3 install padatious fann2==1.0.7
 
-    # dinkum listener
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-dinkum-listener
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-vad-plugin-silero
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-ww-plugin-pocketsphinx
-
-    #Precise-lite wake-word (ww) cluster
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-ww-plugin-precise-lite
-    pip3 install --upgrade setuptools
+    # Precise-lite wake-word (ww) cluster
     pip3 install tflite_runtime
     pip3 install PyYAML
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-workshop
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-lingua-franca
     pip3 install PyAudio
 
-    # install speech to text (stt)
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-microphone-plugin-alsa
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-stt-plugin-server
-
     # install text to speech (tts)
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic3-server
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-mimic
-    sudo apt install -y espeak-ng
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-plugin-piper
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-tts-server-plugin
-
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-config
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-utils
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-bus-client
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-plugin-manager
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-cli-client
+    echo $sudoPW | sudo -S apt install -y espeak-ng
 
     # install phal components
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-PHAL
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-phal-plugin-connectivity-events
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-phal-plugin-system
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-PHAL-plugin-ipgeo
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-PHAL-plugin-oauth
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-phal-plugin-dashboard
-    pip3 install git+https://github.com/OpenVoiceOS/ovos-phal-plugin-alsa
 
-    # install required skills
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-volume
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-unknown
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-stop
-    pip3 install git+https://github.com/OpenVoiceOS/skill-alerts
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-personal
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-naptime
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-date-time
+    INSTALL=""
+    # install ovos-core
+    for p in $OVOS_CORE_REPOS $OVOS_DINKUM_REPOS $OVOS_PRECISE_LITE_REPOS $OVOS_STT_REPOS $OVOS_TTS_REPOS $OVOS_EXTRA_REPOS $OVOS_PHAL_REPOS; do
+	INSTALL="$INSTALL ${PIP_EDITABLE} ${OVOS_SOURCE}/$p"
+    done
+    # Skills cannot be installed as 'editable' as they will not be discovered by importlib.metadata: https://github.com/python/cpython/issues/96144
+    for p in $OVOS_SKILLS_REPOS; do
+	INSTALL="$INSTALL ${OVOS_SOURCE}/$p"
+    done
+
+    # Do all the installs at once to allow pip to sort out dependencies nicely
+    echo installing $INSTALL
+    pip3 install $INSTALL
 
     # You can uncomment these lines if the deprecation notices are flooding your logs or slowing the system
     #sed -i '/\@deprecated/d' $HOME/.local/lib/python3.9/site-packages/ovos_utils/fingerprinting.py
@@ -90,14 +92,14 @@ function install_systemd (){
     echo
 
     # install the hook files
-    cp $SCRIPT_DIR/stage-core/01-ovos-core/files/ovos-systemd-skills $HOME/.local/bin/
-    cp $SCRIPT_DIR/stage-core/02-messagebus/files/ovos-systemd-messagebus $HOME/.local/bin/
-    cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-systemd-audio $HOME/.local/bin/
-    cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-systemd-dinkum-listener $HOME/.local/bin/
-    cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-systemd-phal $HOME/.local/bin/
-    sudo cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-systemd-admin-phal /usr/libexec
+    cp $SCRIPT_DIR/stage-core/01-ovos-core/files/ovos-systemd-skills ${BINDIR}/
+    cp $SCRIPT_DIR/stage-core/02-messagebus/files/ovos-systemd-messagebus ${BINDIR}/
+    cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-systemd-audio ${BINDIR}/
+    cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-systemd-dinkum-listener ${BINDIR}/
+    cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-systemd-phal ${BINDIR}/
+    echo $sudoPW | sudo -S cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-systemd-admin-phal /usr/libexec
 
-    chmod +x $HOME/.local/bin/ovos-systemd*
+    chmod +x ${BINDIR}/ovos-systemd*
     echo $sudoPW | sudo -S chmod +x /usr/libexec/ovos-systemd-admin-phal
 
     # sdnotify is required
@@ -113,18 +115,22 @@ function install_systemd (){
     cp $SCRIPT_DIR/stage-audio/01-speech/files/ovos-audio.service $HOME/.config/systemd/user/
     cp $SCRIPT_DIR/stage-audio/02-voice/files/ovos-dinkum-listener.service $HOME/.config/systemd/user/
     cp $SCRIPT_DIR/stage-phal/01-user/files/ovos-phal.service $HOME/.config/systemd/user/
-    echo $sudoPW |  sudo -S cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-admin-phal.service /etc/systemd/system/
+    echo $sudoPW | sudo -S cp $SCRIPT_DIR/stage-phal/02-admin/files/ovos-admin-phal.service /etc/systemd/system/
 
+    # Use the venv python to run the scripts
     for f in $HOME/.config/systemd/user/*.service ; do
-        sed -i s,/usr/libexec,/home/ovos/.local/bin,g $f
+        sed -i s,/usr/libexec,${BINDIR},g $f
+	sed -i "s,ExecStart=,ExecStart=${OVOS_VENV}/bin/python3 ," $f
         # extend the timeouts
         # sed -i s/=1m/=2m/g $f
     done
+    echo $sudoPW | sudo -S sed -i "s,ExecStart=,ExecStart=${OVOS_VENV}/bin/python3 ," /etc/systemd/system/ovos-admin-phal.service
 
     if [[ $enabled == "YES" ]]; then
         echo
         echo "Enabling service files"
         echo
+        echo $sudoPW | sudo -S loginctl enable-linger $USER
         systemctl --user enable ovos
         systemctl --user enable ovos-messagebus
         systemctl --user enable ovos-dinkum-listener
@@ -146,30 +152,18 @@ function install_extra_skills (){
     echo
     echo "Installing extra skills"
     echo
-    # from NeonGeckoCom
-    pip3 install git+https://github.com/NeonGeckoCom/skill-user_settings
-    pip3 install git+https://github.com/NeonGeckoCom/skill-spelling
-    pip3 install git+https://github.com/NeonGeckoCom/skill-local_music
-    pip3 install git+https://github.com/NeonGeckoCom/skill-caffeinewiz
 
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-weather
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-hello-world
+    INSTALL=""
+    # install the OVOS extra skills
+    for p in $OVOS_EXTRA_SKILLS_REPOS; do
+	INSTALL="$INSTALL ${OVOS_SOURCE}/$p"
+    done
 
-    # common query
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-ddg
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-wolfie
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-wikipedia
+    # Add some fun
+    INSTALL="$INSTALL git+https://github.com/JarbasSkills/skill-icanhazdadjokes"
 
-    # fallback
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-fallback-chatgpt
-
-    # OCP
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-news
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-somafm
-    pip3 install git+https://github.com/OpenVoiceOS/skill-ovos-youtube-music
-
-    # fun
-    pip3 install git+https://github.com/JarbasSkills/skill-icanhazdadjokes
+    # Do all the installs at once to allow pip to sort out dependencies nicely
+    pip3 install $INSTALL
 
     # Here is where to include your local skills
     if [[ ! -d $HOME/.local/share/mycroft/skills ]]; then
@@ -189,84 +183,142 @@ echo
 echo "First lets setup some things."
 echo
 
+# Save the config to allow multiple runs without typing too much :)
+function save_config() {
+    mkdir -p ~/.config/ovos/
+    cat <<EOF > ~/.config/ovos/manual_install.env
+want_source=$want_source
+OVOS_SOURCE=$OVOS_SOURCE
+OVOS_VENV=$OVOS_VENV
+systemd=$systemd
+enabled=$enabled
+ram_disk=$ram_disk
+extra_skills=$extra_skills
+install=$install
+EOF
+}
+# Get defaults from previous run
+[[ -e ~/.config/ovos/manual_install.env ]] && . ~/.config/ovos/manual_install.env
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-read -p "Do you want to install systemd files (Y/n): " systemd
+read -ep "Do you want a local git clone of all the source (y/N): " -i "$want_source" want_source
+if [[ $want_source == y* || $want_source == Y* ]]; then
+    want_source="YES"
+    PIP_EDITABLE="-e"
+    echo
+    : ${OVOS_SOURCE:="$HOME/ovos-src"}
+    read -ep "What directory should the source be cloned to: " -i "$OVOS_SOURCE" OVOS_SOURCE
+    echo
+else
+    want_source="NO"
+    OVOS_SOURCE="git+https://github.com/OpenVoiceOS"
+fi
+: ${OVOS_VENV:=$HOME/venv-ovos}
+read -ep "What directory should the venv be installed into: " -i $OVOS_VENV OVOS_VENV
+
+read -ep "Do you want to install systemd files (Y/n): " -i "$systemd" systemd
 if [[ -z "$systemd" || $systemd == y* || $systemd == Y* ]]; then
     systemd="YES"
     echo
     read -s -p "Enter your $USER password: " sudoPW
     echo
     echo
-    read -p "Do you want to automatically start the ovos services? (Y/n): " enabled
+    read -ep "Do you want to automatically start the ovos services? (Y/n): " -i "$enabled" enabled
     if [[ -z "$enabled" || $enabled == y* || $enabled == Y* ]]; then
         enabled="YES"
     fi
 fi
 echo
-read -p "Are you using a ramdisk at /ramdisk/mycroft? (Y/n): " ram_disk
+read -ep "Are you using a ramdisk at /ramdisk/mycroft? (Y/n): " -i "$ram_disk" ram_disk
 if [[ -z "$ram_disk" || $ram_disk == y* || $ram_disk == Y* ]]; then
     ram_disk="YES"
 fi
 echo
-read -p "Would you like to install extra skills to match the downloadable image? (Y/n): " extra_skills
+read -ep "Would you like to install extra skills to match the downloadable image? (Y/n): " -i "$extra_skills" extra_skills
 if [[ -z "$extra_skills" || $extra_skills == y* || $extra_skills == Y* ]]; then
     extra_skills="YES"
 fi
+save_config # up to this point
 echo
 echo "We are now ready to install OVOS"
 echo
-read -p "Type 'Y' to start install (any other key aborts): " install
+read -ep "Type 'Y' to start install (any other key aborts): " -i "$install" install
+
+if [[ $install != Y* && $install != y* ]]; then
+    exit 0
+fi
+save_config # include the install's yes answer :)
 
 # update your system
-sudo apt update -y
-sudo apt upgrade -y
+echo $sudoPW | sudo -S apt update -y
+echo $sudoPW | sudo -S apt upgrade -y
 
-if [[ $install == Y* || $install == y* ]]; then
-    if [[ ! -d $HOME/.local/bin ]]; then
-        mkdir -p $HOME/.local/bin
-    fi
-    PATH=$HOME/.local/bin:$PATH
-
-    install_core
-
-    # in preparation for someday asking the location of the ramdisk and putting it in
-    if [[ $ramdisk != "YES" ]]; then
-       sed -i /"logs"/,+4d $HOME/.config/mycroft/mycroft.conf
-    fi
-
-    if [[ $systemd == "YES" ]]; then
-        install_systemd
-    fi
-
-    if [[ $extra_skills == "YES" ]]; then
-        install_extra_skills
-    fi
-
-    echo "Done installing OVOS"
+if [[ ! -d $OVOS_VENV ]]; then
+    echo Creating ovos venv
+    python3 -mvenv $OVOS_VENV
+    $OVOS_VENV/bin/pip3 install --upgrade setuptools wheel pip
     echo
-    read -p "Would you like to start ovos now? (Y/n): " start
-    if [[ -z "$start" || $start == y* || $start == Y* ]]; then
-        systemctl --user start ovos
-        sleep 1
-        echo $sudoPW | sudo -S systemctl start ovos-admin-phal
-    else
-        echo
-        echo "You can start the ovos services with 'systemctl --user start ovos'"
-        echo
-    fi
-    echo ""
-    echo "1. Consider creating an .asoundrc and check your microphone with alsamixer, arecord, and aplay."
-    echo ""
-    echo "2. You can find documentation at https://openvoiceos.github.io/community-docs/install_raspbian/"
-    echo ""
-    echo "3. You can find pre-built OVOS/PI images at https://ovosimages.ziggyai.online/raspbian/"
-    echo ""
-    echo "4. After a reboot $HOME/.local/bin will be added to your path and give you access to the ovos command line utilities."
-    echo ""
-    echo "Enjoy your OVOS device"
 fi
+. $OVOS_VENV/bin/activate || {
+    echo Failed to activate ovos venv at $OVOS_VENV
+    exit 1
+}
+BINDIR=$OVOS_VENV/bin
+
+if [[ ! -d ${BINDIR} ]]; then
+    mkdir -p ${BINDIR}
+fi
+
+# Ensure PATH includes BINDIR (but only once)
+if ! grep -q ${BINDIR} ~/.bashrc; then
+cat <<EOF >> ~/.bashrc
+PATH=:\$PATH
+PATH=$BINDIR\${PATH//:'$BINDIR':/:}
+EOF
+fi
+
+if [[ $want_source == "YES" ]]; then
+    get_src
+fi
+
+install_core
+
+# in preparation for someday asking the location of the ramdisk and putting it in
+if [[ $ramdisk != "YES" ]]; then
+    sed -i /"logs"/,+4d $HOME/.config/mycroft/mycroft.conf
+fi
+
+if [[ $systemd == "YES" ]]; then
+    install_systemd
+fi
+
+if [[ $extra_skills == "YES" ]]; then
+    install_extra_skills
+fi
+
+echo "Done installing OVOS"
+echo
+read -p "Would you like to start ovos now? (Y/n): " start
+if [[ -z "$start" || $start == y* || $start == Y* ]]; then
+    systemctl --user start ovos
+    sleep 1
+    echo $sudoPW | sudo -S systemctl start ovos-admin-phal
+else
+    echo
+    echo "You can start the ovos services with 'systemctl --user start ovos'"
+    echo
+fi
+echo ""
+echo "1. Consider creating an .asoundrc and check your microphone with alsamixer, arecord, and aplay."
+echo ""
+echo "2. You can find documentation at https://openvoiceos.github.io/community-docs/"
+echo ""
+echo "3. You can find pre-built OVOS/PI images at https://ovosimages.ziggyai.online/raspbian/development/"
+echo ""
+echo "4. After a reboot ${BINDIR} will be added to your path and give you access to the ovos command line utilities."
+echo ""
+echo "Enjoy your OVOS device"
 
 exit 0
 

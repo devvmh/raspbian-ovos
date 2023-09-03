@@ -254,6 +254,9 @@ save_config # include the install's yes answer :)
 echo $sudoPW | sudo -S apt update -y
 echo $sudoPW | sudo -S apt upgrade -y
 
+# Ensure the correct packages are installed
+echo $sudoPW | sudo -S apt install -y python3-dev python3-pip python3-venv
+
 if [[ ! -d $OVOS_VENV ]]; then
     echo Creating ovos venv
     python3 -mvenv $OVOS_VENV

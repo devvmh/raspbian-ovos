@@ -38,6 +38,9 @@ gpu_mem=16
 # Obvious
 disable_splash=1
 
+# Enable USB boot
+program_usb_boot_mode=1
+
 # Speed things up a bit
 [pi3]
 

@@ -5,8 +5,12 @@ install -v -d -m 0755 "${ROOTFS_DIR}/etc/pulse"
 install -v -m 0644 files/pulseaudio-daemon.conf "${ROOTFS_DIR}/etc/pulse/"
 install -v -m 0644 files/pulseaudio-system.pa "${ROOTFS_DIR}/etc/pulse/"
 
+# Comment out `suspend_on_idle` from both system.pa and default.pa
+sed -i "s\load-module module-suspend-on-idle\#load-module module-suspend-on-idle\g" ${ROOTFS_DIR}/etc/pulse/default.pa
+sed -i "s\load-module module-suspend-on-idle\#load-module module-suspend-on-idle\g" ${ROOTFS_DIR}/etc/pulse/system.pa
+sed -i "s\load-module module-udev-detect\load-module module-udev-detect tsched=0\g" ${ROOTFS_DIR}/etc/pulse/system.pa
 
-install -v -m 0644 files/asound.state "${ROOTFS_DIR}/var/lib/alsa/asound.state"
+install -v -m 0644 files/asound.conf "${ROOTFS_DIR}/etc/asound.conf"
 
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev"
 install -v -d -m 0755 "${ROOTFS_DIR}/etc/udev/rules.d"
@@ -16,9 +20,12 @@ install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/piper_tts"
 install -v -d -m 0755 "${ROOTFS_DIR}/home/ovos/.local/share/piper_tts/voice-en-gb-alan-low"
 
-wget https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-en-gb-alan-low.tar.gz
-tar -xf voice-en-gb-alan-low.tar.gz -C "${ROOTFS_DIR}/home/ovos/.local/share/piper_tts/voice-en-gb-alan-low"
-rm voice-en-gb-alan-low.tar.gz
+wget https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-en-gb-alan-low.tar.gz -P "${ROOTFS_DIR}/home/ovos/.local/share/piper_tts/voice-en-gb-alan-low/"
+on_chroot << EOF
+
+tar -xvzf /home/ovos/.local/share/piper_tts/voice-en-gb-alan-low/voice-en-gb-alan-low.tar.gz
+
+EOF
 
 install -v -m 0644 files/ovos-audio.service "${ROOTFS_DIR}/etc/systemd/user/ovos-audio.service"
 install -v -m 0755 files/ovos-systemd-audio "${ROOTFS_DIR}/usr/libexec/ovos-systemd-audio"
